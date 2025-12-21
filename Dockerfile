@@ -4,16 +4,16 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json package-lock.json* ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy source code
 COPY . .
 
 # Build the application
-# SvelteKit with adapter-auto will build static files if possible
+# SvelteKit with adapter-static outputs to build/ directory
 RUN npm run build
 
 # Production stage
